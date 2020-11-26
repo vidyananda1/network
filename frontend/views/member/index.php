@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use \common\models\User;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MemberSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -35,6 +35,12 @@ use yii\grid\GridView;
                             'mem_name',
                             'address',
                             'phone',
+                            [
+                                'value'=>function($model) {
+                                    $user = User::find()->where(['id'=>$model->user_id])->one();
+                                    return $user->username;
+                                }   
+                            ],
                             //'user_id',
                             //'created_by',
                             //'created_date',
@@ -42,8 +48,17 @@ use yii\grid\GridView;
                             //'updated_date',
                             //'record_status',
 
-                            ['class' => 'yii\grid\ActionColumn',
-                                'template' => '{update} {delete}'],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{update} {delete} {view}',
+                                'buttons' => [
+                                    'view' => function($id,$model){
+                                        return Html::a("<span class='glyphicon glyphicon-repeat'> </span>", 
+                                        ["member/reset-password","id"=>$model->user_id],["data"=>  ["confirm"=>"Corfirmation,are you sure you want to reset password?","meth"],'title'=>'Reset Password']);
+
+                                    }
+                                ]
+                            ],
                         ],
                     ]); ?>
             </div>

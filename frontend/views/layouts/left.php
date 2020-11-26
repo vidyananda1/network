@@ -14,7 +14,7 @@
                       ['label' => 'Account Registration','icon' => ' fa-user-plus', 'url' => ['/registration/index']],
                       ['label' => 'Referral-Details','icon' => ' fa-users', 'url' => ['/referral-details/index']],
                       ['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
-                      ['label' => 'Check Investor','icon' => 'search', 'url' => ['/items']],
+                      ['label' => 'Check Investor','icon' => 'search', 'url' => ['/invester']],
                       // ['label' => 'Reports','icon' => 'clipboard', 'url' => ['/report']],
                       // ['label' => 'Expenses','icon' => 'usd', 'url' => ['/stock-in']],
                      
@@ -33,7 +33,7 @@
 								],
 								 // 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->can('admin'),
 						],
-                        'visible' => !Yii::$app->user->isGuest && Yii::$app->user->can('admin'),
+                        // 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->can('admin'),
 					
                 ], // item
             ]

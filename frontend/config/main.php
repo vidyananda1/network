@@ -22,44 +22,31 @@ return [
         // message source
         // 'downloadAction' => 'gridview/export/download',
         // 'i18n' => []
-        ]
+         ],
+         'admin' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu'
+        ],
     ],
     'components' => [
         'formatter' => [
-        'class' => 'yii\i18n\Formatter',
-        'nullDisplay' => '',
-    ],
-         //theme
-    //      'view' => [
-    //     'theme' => [
-    //         'pathMap' => [
-    //             '@app/views' => '@webroot/themes/red-zen'
-    //         ],
-    //         'baseUrl'   => '@web/themes/red-zen',
-    //     ],
-    // ], 
-
-
-//   'view' =>array(
-//     'theme' => array(
-//     'pathMap' => array('@app/views' => '@wwwroot/themes/THEME_FOLDER_NAME'),
-//     'baseUrl'   => '@www/themes/THEME_FOLDER_NAME'
-//   )
-// )
-
-    //theme
-
-
-
+            'class' => 'yii\i18n\Formatter',
+            'nullDisplay' => '',
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
+        // 'user' => [
+        //     'identityClass' => 'common\models\User',
+        //     //'enableAutoLogin' => true,
+        //     'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+        //      'enableAutoLogin' => false,// session timeout
+        //     'authTimeout' => 3000,// session timeout
+        // ],
         'user' => [
             'identityClass' => 'common\models\User',
-            //'enableAutoLogin' => true,
+            'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-             'enableAutoLogin' => false,// session timeout
-            'authTimeout' => 3000,// session timeout
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -77,6 +64,10 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', 
+        ],
+
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,

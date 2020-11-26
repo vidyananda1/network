@@ -21,7 +21,7 @@ class AdminLteAsset extends BaseAdminLteAsset
         'rmrevin\yii\fontawesome\AssetBundle',
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        // 'yii\bootstrap\BootstrapPluginAsset',
     ];
 
     /**

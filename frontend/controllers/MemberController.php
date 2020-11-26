@@ -5,10 +5,12 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Member;
 use app\models\MemberSearch;
+use app\models\User;
+use kartik\form\ActiveForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\rbac\DbManager;
 /**
  * MemberController implements the CRUD actions for Member model.
  */
@@ -66,13 +68,56 @@ class MemberController extends Controller
     {
         $model = new Member();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) ){
+            Yii::$app->response->format = 'json';
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post()) ) {
+            $transaction = Yii::$app->db->beginTransaction();
+            $user_id = $model->signup();
+            if(!$user_id){
+                // Yii::$app->session->set('toast', 'Failed to create user');
+                Yii::$app->session->setFlash('danger', 'Failed to create user');
+
+            }
+            else {
+                $auth = new DbManager;
+                $auth->init();
+                $role = $auth->getRole($model->name);
+                // echo $model->name;
+                // echo "<pre>";
+                // print_r($role);
+                // echo "</pre>";
+                // die;
+                $auth->assign($role, $user_id);
+                $model->user_id = $user_id;
+                $model->created_by = Yii::$app->user->id;
+                //Not checking because it conflicts with username aleardy exits check
+                if($model->save(false)) { 
+                    $transaction->commit();
+                    Yii::$app->session->setFlash('success', 'User created Successfull !!');
+                }
+                else{
+                    Yii::$app->session->setFlash("danger","Failed to create user, some error has occured");
+                    $transaction->rollback();
+                    print_r($model->errors);die;
+                }
+                return $this->redirect(['index']);
+            } 
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionResetPassword($id){
+        $user = \common\models\User::findOne($id);
+        $user->setPassword("123456");
+        $user->save();
+        Yii::$app->session->setFlash("success","Password reset successfully");
+        return $this->redirect(['member/index']);
     }
 
     /**
