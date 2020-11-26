@@ -39,7 +39,7 @@ class Counter extends \yii\db\ActiveRecord
         return [
             [['investor_name', 'member_code', 'date_of_payment', 'rate_of_interest', 'invested_amount', 'paid_amount', 'status', 'created_by'], 'required'],
             [['member_code', 'created_by', 'updated_by'], 'integer'],
-            [['date_of_payment', 'created_date', 'updated_date'], 'safe'],
+            [['date_of_payment', 'created_date', 'updated_date','no_of_downmember'], 'safe'],
             [['rate_of_interest', 'paid_amount'], 'number'],
             [['status'], 'string'],
             [['investor_name', 'invested_amount'], 'string', 'max' => 255],
@@ -66,6 +66,7 @@ class Counter extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
             'updated_date' => 'Updated Date',
             'record_status' => 'Record Status',
+            'no_of_downmember' => 'No Of Down-members',
         ];
     }
 }

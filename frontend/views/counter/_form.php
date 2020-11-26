@@ -29,7 +29,7 @@ $amount = ArrayHelper::map(Amount::find()->all(), 'value', 'value');
         <div class="panel-body" style="background-color: #f7f9fc;">
             <?php $form = ActiveForm::begin(); ?>
             <div class="row">
-                <div class="col-md-4"> 
+                <div class="col-md-6"> 
                    <?= $form->field($model, 'member_code')->widget(Select2::classname(), [
                                 'data' => $code,
                                 'language' => 'de',
@@ -41,11 +41,15 @@ $amount = ArrayHelper::map(Amount::find()->all(), 'value', 'value');
 
                     ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                    <?= $form->field($model, 'investor_name')->textInput(['maxlength' => true,'readonly'=>true]) ?>  
                 </div>
-                
-                <div class="col-md-4">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                   <?= $form->field($model, 'no_of_downmember')->textInput(['maxlength' => true,'readonly'=>true])->label('No of down-members') ?>  
+                </div>
+                <div class="col-md-6">
                      <?= $form->field($model, 'date_of_payment')->widget(
                         DatePicker::className(), [
                             // inline too, not bad
@@ -107,7 +111,9 @@ $this->registerJs('
                   alert("Name not found !!");
                 } 
                 else{
-                   $("#counter-investor_name").val(data); 
+                    var value = $.parseJSON(data); 
+                    $("#counter-investor_name").val(value.name); 
+                    $("#counter-no_of_downmember").val(value.count);
                 }
             });
   });

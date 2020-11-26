@@ -67,8 +67,17 @@ class CounterController extends Controller
     {
         $model = new Counter();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+       if ($model->load(Yii::$app->request->post()) ) {
+            
+            $model->created_by = Yii::$app->user->id;
+            if(!$model->save()){
+                print_r($model->errors);die;
+                Yii::$app->session->setFlash('danger', 'Failed to Pay Interest to Investor !');
+                return $this->redirect(Yii::$app->request->referrer);
+            }else{
+                Yii::$app->session->setFlash('success', 'Amount  Successfully Paid to Investor!');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('create', [
@@ -79,9 +88,12 @@ class CounterController extends Controller
     public function actionName($id)
     {
         $reg = Registration::find()->where(['id'=>$id])->one();
+        $count = Registration::find()->where(['referral_code'=>$reg->member_code])->count();
+        //die($count);
         $name = $reg->investor_name;
         if($name){
-            return $name;
+            $data = ["name"=>$name,"count"=>$count];
+            return json_encode($data);
         }else{
             return 0;
         }

@@ -18,7 +18,7 @@ class CounterSearch extends Counter
     {
         return [
             [['id', 'member_code', 'created_by', 'updated_by'], 'integer'],
-            [['investor_name', 'date_of_payment', 'invested_amount', 'status', 'created_date', 'updated_date', 'record_status'], 'safe'],
+            [['investor_name', 'date_of_payment', 'invested_amount', 'status', 'created_date', 'updated_date', 'record_status','no_of_downmember'], 'safe'],
             [['rate_of_interest', 'paid_amount'], 'number'],
         ];
     }
@@ -68,6 +68,7 @@ class CounterSearch extends Counter
             'created_date' => $this->created_date,
             'updated_by' => $this->updated_by,
             'updated_date' => $this->updated_date,
+            'no_of_downmember' => $this->no_of_downmember,
         ]);
 
         $query->andFilterWhere(['like', 'investor_name', $this->investor_name])
