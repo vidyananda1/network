@@ -105,7 +105,9 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
                     // 'updated_date',
                     // 'record_status',
 
-                    //['class' => 'yii\grid\ActionColumn'],
+                    ['class' => 'yii\grid\ActionColumn',
+                        'template' => '{update}',
+                ],
                 ],
             ]); ?>
         </div>

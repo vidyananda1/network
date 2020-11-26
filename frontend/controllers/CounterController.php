@@ -110,8 +110,18 @@ class CounterController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            
+            $model->updated_by = Yii::$app->user->id;
+            $model->updated_date = date("Y-m-d h:i:sa");
+            if(!$model->save()){
+                print_r($model->errors);die;
+                Yii::$app->session->setFlash('danger', 'Failed to update !');
+                return $this->redirect(Yii::$app->request->referrer);
+            }else{
+                Yii::$app->session->setFlash('success', '  Successfully updated!');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
