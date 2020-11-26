@@ -33,6 +33,10 @@ use yii\grid\GridView;
                         'referral_code',
                         'investor_name',
                         //'investor_member_code',
+                        [
+                            'attribute'=>'investor_member_code',
+                            'label'=> "Investor's Member Code",
+                        ],
                         //'created_by',
                         //'created_date',
                         //'record_status',

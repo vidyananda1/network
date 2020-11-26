@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RegistrationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -20,7 +20,7 @@ use yii\grid\GridView;
             <div class="panel-body table-responsive">
             
                 <p>
-                    <?= Html::a('Create Registration', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Create Registration', ['create'], ['class' => 'btn btn-warning ']) ?>
                 </p>
 
                 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -49,9 +49,11 @@ use yii\grid\GridView;
                         //'updated_date',
                         //'record_status',
 
-                        ['class' => 'yii\grid\ActionColumn'],
+                        ['class' => 'yii\grid\ActionColumn',
+                            'template' => '{update} {delete}'],
                     ],
                 ]); ?>
             </div>
     </div>
 </div>
+

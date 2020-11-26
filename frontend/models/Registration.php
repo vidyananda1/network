@@ -43,9 +43,9 @@ class Registration extends \yii\db\ActiveRecord
         return [
             [['investor_name', 'phone', 'address', 'aadhaar', 'date', 'member_code', 'referral_status', 'invest_amount', 'total', 'created_by'], 'required'],
             [['date', 'created_date', 'updated_date'], 'safe'],
-            [['referral_status', 'created_by', 'updated_by'], 'integer'],
+            [[ 'created_by', 'updated_by'], 'integer'],
             [['regis_amount', 'invest_amount', 'total'], 'number'],
-            [['investor_name', 'address', 'member_code', 'referral_code'], 'string', 'max' => 255],
+            [['referral_status','investor_name', 'address', 'member_code', 'referral_code'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 10],
             [['aadhaar'], 'string', 'max' => 200],
             [['record_status'], 'string', 'max' => 1],
