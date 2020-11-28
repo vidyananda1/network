@@ -33,10 +33,10 @@ class ReferralDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['registration_id', 'referred_by', 'referral_code', 'investor_name', 'investor_member_code', 'created_by'], 'required'],
+            [['registration_id', 'referral_code', 'investor_name', 'investor_member_code', 'created_by'], 'required'],
             [['registration_id', 'created_by'], 'integer'],
             [['created_date'], 'safe'],
-            [['referred_by', 'referral_code', 'investor_name', 'investor_member_code'], 'string', 'max' => 255],
+            [['referral_code', 'investor_name', 'investor_member_code'], 'string', 'max' => 255],
             [['record_status'], 'string', 'max' => 1],
         ];
     }
@@ -49,7 +49,6 @@ class ReferralDetails extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'registration_id' => 'Registration ID',
-            'referred_by' => 'Referred By',
             'referral_code' => 'Referral Code',
             'investor_name' => 'Investor Name',
             'investor_member_code' => 'Investor Member Code',

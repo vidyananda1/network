@@ -13,7 +13,7 @@ use kartik\select2\Select2;
 
 // $this->title = 'Counters';
 // $this->params['breadcrumbs'][] = $this->title;
-$mem_code= ArrayHelper::map(Registration::find()->all(), 'id', 'member_code');
+$mem_code= ArrayHelper::map(Registration::find()->where(['record_status'=>'1'])->all(), 'id', 'member_code');
 $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
 ?>
 <div class="counter-index">
@@ -40,7 +40,12 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
                     [
                         'attribute'=>'member_code',
                         'value' => function ($model) use($mem_code) {
-                        return isset($model->member_code) ? $mem_code[$model->member_code] : ' ';
+                            if($mem_code){
+                              return isset($model->member_code ) ? $mem_code[$model->member_code] : ' ';  
+                          }else{
+                            return ' ';
+                          }
+                        
             
                         },
                         'format' => 'raw',

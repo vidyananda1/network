@@ -2,13 +2,16 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use app\models\Registration;
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ReferralDetailsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 // $this->title = 'Referral Details';
 // $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="referral-details-index">
 
@@ -29,13 +32,26 @@ use yii\grid\GridView;
 
                         // 'id',
                         // 'registration_id',
-                        'referred_by',
-                        'referral_code',
+                        
                         'investor_name',
                         //'investor_member_code',
                         [
                             'attribute'=>'investor_member_code',
                             'label'=> "Investor's Member Code",
+                        ],
+                        'referral_code',
+                        [
+                            'attribute'=>'registration_id',
+                            'value' => function ($model)  {
+                                
+                                $find = Registration::find()->where(['id'=>$model->registration_id])->andWhere(['record_status'=>'1'])->one();
+                                $name = Registration::find()->where(['member_code'=>$model->referral_code])->andWhere(['record_status'=>'1'])->one();
+
+                                return isset($name) ? $name->investor_name : ' ';
+                            },
+                                'format' => 'raw',
+                                'label' => 'Referred By',
+                                'filter' => '',
                         ],
                         //'created_by',
                         //'created_date',

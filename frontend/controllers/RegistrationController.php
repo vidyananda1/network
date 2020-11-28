@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\ReferralDetails;
+use app\models\Counter;
 
 /**
  * RegistrationController implements the CRUD actions for Registration model.
@@ -63,32 +64,33 @@ class RegistrationController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Registration();  
+public function actionCreate()
+{
+    $model = new Registration();  
 
        if ($model->load(Yii::$app->request->post()) ) {
             $model->investor_name = strtoupper($model->investor_name);
             $member_code = "NK".$this->randomNoGenerator(4);
             $model->member_code = $member_code;
             $model->created_by = Yii::$app->user->id;
+
+            $transaction = Yii::$app->db->beginTransaction();
+        try { 
             if(!$model->save()){
-                print_r($model->errors);die;
+                //print_r($model->errors);die;
                 Yii::$app->session->setFlash('danger', 'Failed to registered Investor!');
                 return $this->redirect(Yii::$app->request->referrer);
             }else{
-                if($model->referral_status == 'SELF'){
-
-                    Yii::$app->session->setFlash('success', 'Successfully Registered self!');
-                    return $this->redirect(['index']);
+               
+                    if($model->referral_status == 'SELF'){
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', 'Successfully Registered with referral status Self!');
+                        return $this->redirect(['index']);
                 }else{
-
-                    $transaction = Yii::$app->db->beginTransaction();
-                    try {
-                        $chk = Registration::find()->where(['member_code'=>$model->referral_code])->one();
+                        $chk = Registration::find()->where(['member_code'=>$model->referral_code])->andwhere(['record_status'=>'1'])->one();
                         if(!$chk){
                             $transaction->rollBack();
-                            Yii::$app->session->setFlash('danger', 'Failed to Register,member_code not found!');
+                            Yii::$app->session->setFlash('danger', 'Failed to Register,Member Code not found!');
                             return $this->redirect(['index',]);
                         }else{
                             $referral = new ReferralDetails();
@@ -99,21 +101,24 @@ class RegistrationController extends Controller
                             $referral->investor_member_code = $model->member_code;
                             $referral->created_by = Yii::$app->user->id;
 
-                            if($referral->save()){
+                            
+                        }
+                        if($referral->save()){
                                 $transaction->commit();
                                 Yii::$app->session->setFlash('success', 'Successfully Registered!');
                                 return $this->redirect(['index']);
                             }
                             $transaction->rollBack();
                             Yii::$app->session->setFlash('danger', 'Failed to Register in ReferralDetails!');
-                            return $this->redirect(['index',]);
-                        }       
+                            return $this->redirect(['index',]);       
                     }
-                    catch (Exception $e) {
+                    
+                    }
+                    
+                }
+                catch (Exception $e) {
                           $transaction->rollBack();
                         }
-                    }
-                }
         }
 
         return $this->render('create', [
@@ -132,80 +137,107 @@ class RegistrationController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+    $model = $this->findModel($id);
 
        
-       if ($model->load(Yii::$app->request->post()) ) {
+    if ($model->load(Yii::$app->request->post()) ) {
             $model->investor_name = strtoupper($model->investor_name);
             $model->updated_by = Yii::$app->user->id;
             $model->updated_date = date("Y-m-d h:i:sa");
-            if(!$model->save()){
-                print_r($model->errors);die;
-                Yii::$app->session->setFlash('danger', 'Failed to update registered Investor!');
-                return $this->redirect(Yii::$app->request->referrer);
+            $transaction = Yii::$app->db->beginTransaction();
+
+        try {
+                if(!$model->save()){
+                    //print_r($model->errors);die;
+                    Yii::$app->session->setFlash('danger', 'Failed to update registered Investor!');
+                    return $this->redirect(Yii::$app->request->referrer);
             }else{
-                $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $chk = ReferralDetails::find()->where(['registration_id'=>$id])->one();
-                $regis = Registration::find()->where(['member_code'=>$model->referral_code])->one();
-                $name = $regis->investor_name;
+               
+                $chk = ReferralDetails::find()->where(['registration_id'=>$id])->andwhere(['record_status'=>'1'])->one();
+                
                 if(!$chk){
                     if($model->referral_status == 'SELF'){
-
-                        Yii::$app->session->setFlash('success', 'Successfully update Registered with no referral!');
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', 'Successfully update with no Referral Details!');
                         return $this->redirect(['index']);
                     }else{
                         $ref= new ReferralDetails();
-                        $ref->registration_id = $model->id;
-                        $ref->referred_by = $name;
+                        $ref->registration_id = $id;
+                        $regis = Registration::find()->where(['member_code'=>$model->referral_code])->andwhere(['record_status'=>'1'])->one();
+                        //die($regis->investor_name);
+                        $ref->referred_by = $regis->investor_name;
                         $ref->investor_name = $model->investor_name;
                         $ref->referral_code = $model->referral_code;
-                    }
-                     if($ref->save()){
+                        $ref->investor_member_code = $model->member_code;
+                        $ref->created_by = Yii::$app->user->id;
+                        if($ref->save()){
                                 $transaction->commit();
-                                Yii::$app->session->setFlash('success', 'Successfully update Registered with no referral 1 !');
+                                Yii::$app->session->setFlash('success', 'Successfully Updated and change referral status from Self to Referral !');
                                 return $this->redirect(['index']);
                             }
-                            print_r($model->errors);die;
+                            //print_r($model->errors);die;
                             $transaction->rollBack();
-                            Yii::$app->session->setFlash('danger', 'Failed to Update in ReferralDetails 1!');
+                            Yii::$app->session->setFlash('danger', 'Failed to Update and change referral status from Self to Referral !');
                             return $this->redirect(['index',]);
+                    }
+                     
 
                     
                 }else{
+                    if($model->referral_status == 'SELF'){
+                        $member =  ReferralDetails::find()->where(['registration_id'=>$id])->andwhere(['record_status'=>'1'])->one();
+                        $member->record_status = '0';
 
-                    
-                       
-                        $referral = ReferralDetails::find()->where(['registration_id'=>$id])->one();
+                        if(!$member->save()){
+                            $transaction->rollBack();
+                            Yii::$app->session->setFlash('danger', 'Failed to update and change referral status from Referral to Self !');
+                            return $this->redirect(['index']);
+                        }else{
+                            $model->referral_code = Null;
+                            if(!$model->save()){
+                                $transaction->rollBack();
+                                Yii::$app->session->setFlash('danger', 'Failed to update and change referral status from Referral to Self as referal code cannot be null !');
+                                return $this->redirect(['index']);  
+                            }
+
+                            $transaction->commit();
+                            Yii::$app->session->setFlash('success', 'Successfully Updated and change referral status from Referral to Self !');
+                            return $this->redirect(['index']);    
+                        }
+                        
+                    }else{   
+                        $referral = ReferralDetails::find()->where(['registration_id'=>$id])->andwhere(['record_status'=>'1'])->one();
                         $referral->registration_id = $model->id;
-                        $referral->referred_by = $name;
+                        $nam = Registration::find()->where(['member_code'=>$model->referral_code])->andwhere(['record_status'=>'1'])->one();
+                        $referral->referred_by = $nam->investor_name;
                         $referral->investor_name = $model->investor_name;
                         $referral->referral_code = $model->referral_code;
 
-                            if($referral->save()){
+                        } 
+                        if($referral->save()){
                                 $transaction->commit();
                                 Yii::$app->session->setFlash('success', 'Successfully Updated !');
                                 return $this->redirect(['index']);
                             }
                             $transaction->rollBack();
                             Yii::$app->session->setFlash('danger', 'Failed to Update in ReferralDetails!');
-                            return $this->redirect(['index',]);
-                              
+                            return $this->redirect(['index',]);         
                     }
                     
-                    }
-                    catch (Exception $e) {
-                          $transaction->rollBack();
-                        }
                 }
+                    
+            }
+            catch (Exception $e) {
+                      $transaction->rollBack();
+                    }
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
+}
 
     /**
      * Deletes an existing Registration model.
@@ -216,7 +248,58 @@ class RegistrationController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        // $this->findModel($id)->delete();
+        // return $this->redirect(['index']);
+        $model=$this->findModel($id);
+        $model->record_status='0';
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+        
+                if(!$model->save()){
+                    Yii::$app->session->setFlash('danger', 'Unable to delete Investor in Registration Details!');
+                    return $this->redirect(Yii::$app->request->referrer);
+                }else{
+
+                   
+                    $refer = ReferralDetails::find()->where(['registration_id'=>$id])->andwhere(['record_status'=>'1'])->one();
+                    $refer->record_status='0';
+
+                    
+                    
+
+                    if(!$refer->save()){
+
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('danger', 'Unable to delete Investor in ReferralDetails!');
+                        return $this->redirect(Yii::$app->request->referrer);
+                    }else{
+
+                        $payment = Counter::find()->asArray()->where(['investor_id'=>$id])->andwhere(['record_status'=>'1'])->all();
+                        foreach ($payment as $key => $value) {
+                            $counter = Counter::find()->where(['investor_id'=>$id])->andwhere(['record_status'=>'1'])->one();
+                            $counter->record_status='0';
+
+                            if(!$counter->save()){
+
+                                $transaction->rollBack();
+                                Yii::$app->session->setFlash('danger', 'Unable to delete Investor in Payment Table!');
+
+                            }
+
+                        }
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', 'All details of the Investor Deleted  !');
+                        return $this->redirect(['index']);    
+                    }
+                        
+
+                }
+            }
+            catch (Exception $e) {
+                      $transaction->rollBack();
+                    }
+
 
         return $this->redirect(['index']);
     }

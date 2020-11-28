@@ -38,6 +38,8 @@ class CounterController extends Controller
     {
         $searchModel = new CounterSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['record_status'=>'1']);
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
