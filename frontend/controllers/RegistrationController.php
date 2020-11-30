@@ -95,7 +95,7 @@ public function actionCreate()
                         }else{
                             $referral = new ReferralDetails();
                             $referral->registration_id = $model->id;
-                            $referral->referred_by = $chk->investor_name;
+                            //$referral->referred_by = $chk->investor_name;
                             $referral->referral_code = $model->referral_code;
                             $referral->investor_name = $model->investor_name;
                             $referral->investor_member_code = $model->member_code;
@@ -167,7 +167,7 @@ public function actionUpdate($id)
                         $ref->registration_id = $id;
                         $regis = Registration::find()->where(['member_code'=>$model->referral_code])->andwhere(['record_status'=>'1'])->one();
                         //die($regis->investor_name);
-                        $ref->referred_by = $regis->investor_name;
+                        //$ref->referred_by = $regis->investor_name;
                         $ref->investor_name = $model->investor_name;
                         $ref->referral_code = $model->referral_code;
                         $ref->investor_member_code = $model->member_code;
@@ -211,7 +211,7 @@ public function actionUpdate($id)
                         $referral = ReferralDetails::find()->where(['registration_id'=>$id])->andwhere(['record_status'=>'1'])->one();
                         $referral->registration_id = $model->id;
                         $nam = Registration::find()->where(['member_code'=>$model->referral_code])->andwhere(['record_status'=>'1'])->one();
-                        $referral->referred_by = $nam->investor_name;
+                        //$referral->referred_by = $nam->investor_name;
                         $referral->investor_name = $model->investor_name;
                         $referral->referral_code = $model->referral_code;
 
@@ -261,40 +261,49 @@ public function actionUpdate($id)
                     return $this->redirect(Yii::$app->request->referrer);
                 }else{
 
-                   
-                    $refer = ReferralDetails::find()->where(['registration_id'=>$id])->andwhere(['record_status'=>'1'])->one();
-                    $refer->record_status='0';
+                    $chk = ReferralDetails::find()->asArray()->where(['registration_id'=>$id])->all();
+                    // echo "<pre>";
+                    // print_r($chk);echo "</pre>";die;
+                    if($chk){
+                        foreach ($chk as $key => $value) {
+                             
+                            $ref = ReferralDetails::find()->where(['id'=>$value['id']])->one();
+                            $ref->record_status='0';
+                            $ref->save();                         
+                        }
 
-                    
-                    
-
-                    if(!$refer->save()){
-
-                        $transaction->rollBack();
-                        Yii::$app->session->setFlash('danger', 'Unable to delete Investor in ReferralDetails!');
-                        return $this->redirect(Yii::$app->request->referrer);
+                        
                     }else{
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', 'Successfully deleted and no previous record in Referral Details !');
+                        return $this->redirect(['index',]);   
+                    }
 
-                        $payment = Counter::find()->asArray()->where(['investor_id'=>$id])->andwhere(['record_status'=>'1'])->all();
-                        foreach ($payment as $key => $value) {
-                            $counter = Counter::find()->where(['investor_id'=>$id])->andwhere(['record_status'=>'1'])->one();
+                    $chk1 = Counter::find()->asArray()->where(['investor_id'=>$id])->all();
+                    if($chk1){
+                        foreach ($chk1 as $key => $value) {
+
+                            $counter = Counter::find()->where(['id'=>$value['id']])->one();
                             $counter->record_status='0';
-
-                            if(!$counter->save()){
-
-                                $transaction->rollBack();
-                                Yii::$app->session->setFlash('danger', 'Unable to delete Investor in Payment Table!');
-
-                            }
+                            $counter->save();  
+                            //$transaction->commit(); 
 
                         }
                         $transaction->commit();
-                        Yii::$app->session->setFlash('success', 'All details of the Investor Deleted  !');
-                        return $this->redirect(['index']);    
+                        Yii::$app->session->setFlash('success', 'All details Successfully Deleted !');
+                        return $this->redirect(['index']);
+                        
+                    }else{
+                        //print_r($model->errors);die;
+                         $transaction->commit();
+                        Yii::$app->session->setFlash('success', 'Successfully deleted ...No previous record in Payment Details and Referral Details !');
+                        return $this->redirect(['index',]);  
                     }
+                    
                         
 
                 }
+                   
             }
             catch (Exception $e) {
                       $transaction->rollBack();

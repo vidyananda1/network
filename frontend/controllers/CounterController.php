@@ -70,10 +70,10 @@ class CounterController extends Controller
         $model = new Counter();
 
        if ($model->load(Yii::$app->request->post()) ) {
-            
+            $model->investor_id = $model->member_code;
             $model->created_by = Yii::$app->user->id;
             if(!$model->save()){
-                print_r($model->errors);die;
+                //print_r($model->errors);die;
                 Yii::$app->session->setFlash('danger', 'Failed to Pay Interest to Investor !');
                 return $this->redirect(Yii::$app->request->referrer);
             }else{
