@@ -18,7 +18,7 @@ class ReferralDetailsSearch extends ReferralDetails
     {
         return [
             [['id', 'registration_id', 'created_by'], 'integer'],
-            [['referred_by', 'referral_code', 'investor_name', 'investor_member_code', 'created_date', 'record_status'], 'safe'],
+            [[ 'referral_code', 'investor_name', 'investor_member_code', 'created_date', 'record_status'], 'safe'],
         ];
     }
 
@@ -64,8 +64,7 @@ class ReferralDetailsSearch extends ReferralDetails
             'created_date' => $this->created_date,
         ]);
 
-        $query->andFilterWhere(['like', 'referred_by', $this->referred_by])
-            ->andFilterWhere(['like', 'referral_code', $this->referral_code])
+        $query->andFilterWhere(['like', 'referral_code', $this->referral_code])
             ->andFilterWhere(['like', 'investor_name', $this->investor_name])
             ->andFilterWhere(['like', 'investor_member_code', $this->investor_member_code])
             ->andFilterWhere(['like', 'record_status', $this->record_status]);

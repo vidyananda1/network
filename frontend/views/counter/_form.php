@@ -11,8 +11,8 @@ use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Counter */
 /* @var $form yii\widgets\ActiveForm */
-$code = ArrayHelper::map(Registration::find()->all(), 'id', 'member_code');
-$amount = ArrayHelper::map(Amount::find()->all(), 'value', 'value');
+$code = ArrayHelper::map(Registration::find()->where(['record_status'=>'1'])->all(), 'id', 'member_code');
+$amount = ArrayHelper::map(Amount::find(['record_status'=>'1'])->all(), 'value', 'value');
 ?>
 
 <div class="counter-form">

@@ -3,19 +3,69 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\bootstrap\Modal;
+use common\models\User;
+use kartik\export\ExportMenu;
+use yii\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RegistrationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 // $this->title = 'Registrations';
 // $this->params['breadcrumbs'][] = $this->title;
+$user= ArrayHelper::map(User::find()->all(), 'id', 'username');
 ?>
 <br><br><br>
 <div class="registration-index">
+
+    <?php 
+         $gridColumns = [
+            'investor_name',
+                    //'member_code',
+                   'investor_name',
+                        'phone',
+                        'address',
+                        'aadhaar',
+                        'date',
+                        'member_code',
+                        'referral_status',
+                        'referral_code',
+                        'regis_amount',
+                        'invest_amount',
+                        'total',
+                    [
+                        'attribute'=>'created_by',
+                        'value' => function ($model) use($user) {
+                        return isset($model->created_by) ? $user[$model->created_by] : ' ';
+                        },
+                        'format' => 'raw',
+                        'label' => 'User',
+                        'filter' => '',
+
+                    ],
+
+    ];
+
+            
+    ?>
     
     <div class="panel panel-default" style="box-shadow: 4px 4px 7px grey">
         <div class=" panel-heading">
-            <b class="text-muted"> Showing Account Registration Details</b>
+            <b class="text-muted" style="font-size: 17px"> Showing Account Registration Details</b>
+            <p >
+                <?php
+                    echo ExportMenu::widget([
+                    'dataProvider' => $dataProvider,
+                    'columns' => $gridColumns,
+                    'exportConfig' => [
+                        ExportMenu::FORMAT_PDF => false,
+                        ExportMenu::FORMAT_HTML => false,
+                        ExportMenu::FORMAT_TEXT => false,
+                        //ExportMenu::FORMAT_EXCEL => false,
+                    ],
+                ])  
+                ?>
+            </p>
         </div>
             <div class="panel-body table-responsive">
             
@@ -32,17 +82,27 @@ use yii\bootstrap\Modal;
                         ['class' => 'yii\grid\SerialColumn'],
 
                         //'id',
-                        'investor_name',
-                        'phone',
-                        'address',
-                        'aadhaar',
-                        'date',
-                        'member_code',
-                        'referral_status',
-                        'referral_code',
-                        'regis_amount',
-                        'invest_amount',
-                        'total',
+                            'investor_name',
+                            'phone',
+                            'address',
+                            'aadhaar',
+                            'date',
+                            'member_code',
+                            'referral_status',
+                            'referral_code',
+                            'regis_amount',
+                            'invest_amount',
+                            'total',
+                        [
+                            'attribute'=>'created_by',
+                            'value' => function ($model) use($user) {
+                            return isset($model->created_by) ? $user[$model->created_by] : ' ';
+                            },
+                            'format' => 'raw',
+                            'label' => 'User',
+                            'filter' => '',
+
+                        ],
                         //'created_by',
                         //'created_date',
                         //'updated_by',
