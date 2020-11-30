@@ -1,3 +1,4 @@
+
 <div class="container">
   <div id="invested_div" ></div>
   <div id="interests_div" ></div>
