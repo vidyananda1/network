@@ -37,18 +37,18 @@ if (Yii::$app->controller->action->id === 'login') {
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script src="bootstrap-sweetalert-master/dist/sweetalert.min.js"></script>
-        <link rel="stylesheet" href="bootstrap-sweetalert-master/dist/sweetalert.css" />
 			
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
     <body class="hold-transition skin-blue-light sidebar-mini">
-       
+    
     <?php $this->beginBody() ?>
+    
     <div class="wrapper" >
-
+    
+    
         <?= $this->render(
             'header.php',
             ['directoryAsset' => $directoryAsset]
@@ -59,12 +59,29 @@ if (Yii::$app->controller->action->id === 'login') {
             ['directoryAsset' => $directoryAsset]
         )
         ?>
+         
+
 
         <?= $this->render(
             'content.php',
             ['content' => $content, 'directoryAsset' => $directoryAsset]
         ) ?>
+        
 
+    </div>
+    <div id="loader" class="sk-circle">
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
     </div>
 
     <?php $this->endBody() ?>
@@ -72,3 +89,11 @@ if (Yii::$app->controller->action->id === 'login') {
     </html>
     <?php $this->endPage() ?>
 <?php } ?>
+<style>
+    #loader{
+        top:200px;
+        display: none;
+        position: absolute;
+        left:500px;
+    }
+</style>

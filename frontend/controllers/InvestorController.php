@@ -6,14 +6,16 @@ use Yii;
 use app\models\Amount;
 use app\models\AmountSearch;
 use app\models\Member;
+use app\models\Registration;
+use app\models\Investor;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\helpers\ArrayHelper;
 /**
  * AmountController implements the CRUD actions for Amount model.
  */
-class InvesterController extends Controller
+class InvestorController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -37,27 +39,59 @@ class InvesterController extends Controller
     public function actionIndex()
     {
         // $this->layout="test.php";
-        $searchModel = new AmountSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['record_status'=>'1']);
-        $members= Member::find()->where(['record_status'=>1])->all();
-        $invester_name= 'Jim';
-        $referred_names = [ 'Bob','Alice','Mike','Carol'];
-        $arr = [];
-        foreach($referred_names as $key => $value) {
+        $model = new investor();
+        $arr = null;
+        $registrations = ArrayHelper::map(Registration::find()->select('member_code,investor_name')->where(['record_status'=>1])->all(),
+        'member_code','investor_name');
+        if($model->load(Yii::$app->request->get())) {
+            // die($model->investor_name);
+            $investor_name= $registrations[$model->investor_name];
+            $referred_names = [ 'Bob','Alice','Mike','Carol'];
+            $referred_names = Registration::find()->select('investor_name')->where(['record_status'=>1,'referral_code'=>$model->investor_name])->asArray()->all();
+            $arr = [];
+            foreach($referred_names as $key => $value) {
+                $arr[]= [$value["investor_name"], $investor_name,''];
+            }
+            // echo "<pre>";print_r($arr);echo "</pre>";die;
+            $arr= json_encode($arr);
+            // echo "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&";
+            // print_r($arr);die;
 
-            $arr[]= [$value, $invester_name,''];
         }
-        // echo "<pre>";print_r($arr);echo "</pre>";die;
-        $arr= json_encode($arr);
+
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'members' => $members,
-            'arr' => $arr
+            'arr' => $arr,
+            'model' => $model,
+            'registrations' => $registrations
         ]);
     }
 
+
+
+    public function actionInvestorsList($investor_name) {
+        $investors = Registration::find()->select('investor_name,member_code')->andFilterWhere(['like','investor_name',$investor_name])->asArray()->all();
+        return json_encode($investors);
+    }
+
+    public function actionMembersList($member_code) {
+        if(!isset($member_code) || $member_code=="")
+            return null; 
+        $registrations = ArrayHelper::map(Registration::find()->select('member_code,investor_name')->where(['record_status'=>1])->all(),
+        'member_code','investor_name');
+        $investor = Registration::find()->select('member_code,investor_name,aadhaar,phone,address,referral_status,referral_code')->where(['member_code'=>$member_code,'record_status'=>1])->asArray()->all();
+        if(empty($investor))
+            return null;
+        $investor_name= $registrations[$member_code];
+        $referred_names = Registration::find()->select('investor_name')->where(['record_status'=>1,'referral_code'=>$member_code])->asArray()->all();
+        $arr = [];
+        foreach($referred_names as $key => $value) {
+            $arr[]= [$value["investor_name"], $investor_name,''];
+        }
+        $obj []= [ 'investor'=>$investor ,'referred' =>$arr];
+        // echo "<pre>";print_r($arr);echo "</pre>";die;
+        $obj= json_encode($obj);
+        return $obj;
+    }
     /**
      * Displays a single Amount model.
      * @param integer $id

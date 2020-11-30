@@ -2,8 +2,6 @@
 
     <section class="sidebar">
 
-        
-
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
@@ -13,15 +11,11 @@
                       
                       ['label' => 'Account Registration','icon' => ' fa-user-plus', 'url' => ['/registration/index']],
                       ['label' => 'Referral-Details','icon' => ' fa-users', 'url' => ['/referral-details/index']],
-<<<<<<< HEAD
                       ['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
-                      ['label' => 'Check Investor','icon' => 'search', 'url' => ['/invester']],
-=======
-                      ['label' => 'Check Investor','icon' => 'search', 'url' => ['/items']],
+                      ['label' => 'Check Investor','icon' => 'search', 'url' => ['/investor']],
                       ['label' => 'Pay Interest','icon' => 'usd', 'url' => ['/counter']],
                       ['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
                      
->>>>>>> 4745a5c2bf23719c77789ceb8ea0c63628b20459
                       // ['label' => 'Reports','icon' => 'clipboard', 'url' => ['/report']],
                       // ['label' => 'Expenses','icon' => 'usd', 'url' => ['/stock-in']],
                      
@@ -49,3 +43,6 @@
     </section>
 
 </aside>
+<style>
+    
+</style>
