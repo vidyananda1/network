@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-md-6">
-<div class="card" style="height: 440px;">
+<div class="card" >
   <div class="card-header" style="background-color: #cfaded">
       <div class="row">
           <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
@@ -10,13 +10,13 @@
           </div>
       </div>
   </div>
-  <div class="card-body">
+  <div class="card-body" style="margin-bottom: 10px;">
       <div id="invested_div" ></div>
   </div>
 </div>
 </div>
 <div class="col-md-6">
-<div class="card" style="height: 440px;">
+<div class="card" >
   <div class="card-header" style="background-color: #cfaded">
       <div class="row">
           <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
@@ -48,7 +48,7 @@ function drawBasic() {
   var options = {
     // title:"",
     width: 200,
-    height: 400,
+    height: 350,
     legend: { position: 'top' },
     bar: { groupWidth: '75%' },
     
@@ -58,7 +58,7 @@ function drawBasic() {
   var interests_options = {
     // title:"",
     width: 200,
-    height: 400,
+    height: 350,
     legend: { position: 'top' },
     bar: { groupWidth: '75%' },
     
@@ -78,15 +78,11 @@ function drawBasic() {
 } 
 </script>
 <style>
-  .container{
-    display: flex;
-    justify-content: space-around;
-  }
-
   .card {
     margin-top: 12px;
     border: thin solid #ccc;
     border-radius: 4px;
+    height: 410px;
 }
 .card-body, .card-header, .card-footer {
     padding: 12px;
