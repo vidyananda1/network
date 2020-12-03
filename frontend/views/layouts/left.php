@@ -14,7 +14,7 @@
                       //['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
                       ['label' => 'Pay Interest','icon' => 'usd', 'url' => ['/counter']],
                       ['label' => 'Check Investor','icon' => 'search', 'url' => ['/investor']],
-                      
+                      ['label' => 'Reports','icon' => 'search', 'url' => ['/report']],
                       ['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
                      
                       // ['label' => 'Reports','icon' => 'clipboard', 'url' => ['/report']],
