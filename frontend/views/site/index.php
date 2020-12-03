@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 use app\models\Registration;
 use app\models\Member;
@@ -21,10 +21,10 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
     <div class="col-lg-3 col-xs-3 " >
           <!-- small box -->
           <div class="small-box shadow" style="background: linear-gradient(to bottom, #33ccff 0%, #48628c 100%); ">
-            <div class="inner">
+          <div class="inner">
              
 
-              <h4 style="font-size: 15px;"><b>Total Investors</b></h4>
+            <h4 style="font-size: 15px;"><b>Total Investors</b></h4>
             </div> 
             <div class="inner">
               <div><h4 style="font-size: 15px"><b><?= $reg ?></b></h4></div>
@@ -34,16 +34,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
             </div>
             
                 <a href="index.php?r=registration/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
-=======
-<div class="row">
-  <div class="col-md-6">
-<div class="card" >
-  <div class="card-header" style="background-color: #cfaded">
-      <div class="row">
-          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-            Invested amount
->>>>>>> bf28c45962851444b0f54ad8d0e7d5136ec173ae
-          </div>
+            </div>
     </div>
     <div class="col-lg-3 col-xs-3">
           <!-- small box -->
@@ -87,7 +78,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
             <div class="inner">
              
 
-              <h4 style="font-size: 15px"><b>Interest Amount</b></h4>
+            <h4 style="font-size: 15px"><b>Interest Amount</b></h4>
               
             </div>
             <div class="inner">
@@ -101,7 +92,9 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
                 <a href="index.php?r=counter/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
           </div>
     </div>
-  </div>
+
+
+</div>
 <div>&emsp;</div>
 <div class="row">
 <div class="col-md-6 ">
