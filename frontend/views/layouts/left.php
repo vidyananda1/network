@@ -11,9 +11,10 @@
                       
                       ['label' => 'Account Registration','icon' => ' fa-user-plus', 'url' => ['/registration/index']],
                       ['label' => 'Referral-Details','icon' => ' fa-users', 'url' => ['/referral-details/index']],
-                      ['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
-                      ['label' => 'Check Investor','icon' => 'search', 'url' => ['/investor']],
+                      //['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
                       ['label' => 'Pay Interest','icon' => 'usd', 'url' => ['/counter']],
+                      ['label' => 'Check Investor','icon' => 'search', 'url' => ['/investor']],
+                      
                       ['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
                      
                       // ['label' => 'Reports','icon' => 'clipboard', 'url' => ['/report']],

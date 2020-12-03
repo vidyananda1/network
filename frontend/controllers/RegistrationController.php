@@ -52,6 +52,22 @@ class RegistrationController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    public function actionPrint($id)
+    {
+        $model = new Registration();
+        $details = Registration::find()->where(["id"=>$id])->one();
+        
+        // if ($model->load(Yii::$app->request->post()) ) {
+        //    // return $this->redirect(['view', 'id' => $model->id]);
+        // }
+        
+
+        return $this->renderAjax('print', [
+            'model' => $model,
+            'details'=>$details
+        ]);
+    }
     public function actionView($id)
     {
         return $this->render('view', [

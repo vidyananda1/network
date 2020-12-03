@@ -86,13 +86,13 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
 
                         // 'id',
                         // 'registration_id',
-                        
-                        'investor_name',
-                        //'investor_member_code',
                         [
                             'attribute'=>'investor_member_code',
                             'label'=> "Investor's Member Code",
                         ],
+                        'investor_name',
+                        //'investor_member_code',
+                       
                         'referral_code',
                         [
                             'attribute'=>'registration_id',

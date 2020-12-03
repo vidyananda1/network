@@ -1,26 +1,119 @@
+<?php
+use app\models\Registration;
+use app\models\Member;
+use app\models\Counter;
+ 
+
+//use app\models\Counterno;
+
+$this->title = '';
+
+$reg = Registration::find()->where(['record_status'=>'1'])->count();
+$mem = Member::find()->where(['record_status'=>'1'])->count();
+$invested_amount = Registration::find()->where(['record_status'=>'1'])->sum('invest_amount');
+$amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount');
+
+?>
 
 
-<div class="row">
-  <div class="col-md-6">
-<div class="card" >
-  <div class="card-header" style="background-color: #cfaded">
-      <div class="row">
-          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-            Invested amount
+<div class="row ">
+    <div class="col-lg-3 col-xs-3 " >
+          <!-- small box -->
+          <div class="small-box shadow" style="background: linear-gradient(to bottom, #33ccff 0%, #48628c 100%); ">
+            <div class="inner">
+             
+
+              <h4 style="font-size: 15px;"><b>Total Investors</b></h4>
+            </div> 
+            <div class="inner">
+              <div><h4 style="font-size: 15px"><b><?= $reg ?></b></h4></div>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+            
+                <a href="index.php?r=registration/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
           </div>
-      </div>
+    </div>
+    <div class="col-lg-3 col-xs-3">
+          <!-- small box -->
+          <div class="small-box shadow" style="background: linear-gradient(to bottom, #99ff99 -6%, #13852e 106%)">
+            <div class="inner">
+             
+
+              <h4 style="font-size: 15px"><b>Total Users</b></h4>
+            </div>
+            <div class="inner">
+              <div><h4 style="font-size: 15px"><b><?= $mem ?></b></h4></div>
+            </div>
+            <div class="icon">
+              <i class="fa fa-user-plus"></i>
+            </div>
+            
+                <a href="index.php?r=member/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
+          </div>
+    </div>
+    <div class="col-lg-3 col-xs-3">
+          <!-- small box -->
+          <div class="small-box shadow" style="background: linear-gradient(to bottom, #ff9966 -7%, #cf2204 135%)">
+            <div class="inner">
+             
+
+              <h4 style="font-size: 15px"><b>Invested Amount</b></h4>
+            </div>
+            <div class="inner">
+              <div><h4 style="font-size: 15px"><b>Rs <?= $invested_amount ?></b></h4></div>
+            </div>
+            <div class="icon">
+              <i class="fa fa-money"></i>
+            </div>
+            
+                <a href="index.php?r=registration/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
+          </div>
+    </div>
+    <div class="col-lg-3 col-xs-3">
+          <!-- small box -->
+          <div class="small-box shadow" style="background: linear-gradient(to bottom, #fffa75 -7%, #bfb30b 135%)">
+            <div class="inner">
+             
+
+              <h4 style="font-size: 15px"><b>Interest Amount</b></h4>
+              
+            </div>
+            <div class="inner">
+              <div><h4 style="font-size: 15px"><b>Rs <?= $amount_paid ?></b></h4></div>
+            </div>
+            
+            <div class="icon">
+              <i class="fa fa-money"></i>
+            </div>
+            
+                <a href="index.php?r=counter/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
+          </div>
+    </div>
   </div>
-  <div class="card-body" style="margin-bottom: 10px;">
-      <div id="invested_div" ></div>
+<div>&emsp;</div>
+<div class="row">
+<div class="col-md-6 ">
+  <div class="card shadow " >
+    <div class="card-header" style="background: linear-gradient(to bottom, #d3aaf2 -7%, #7106c2 135%)">
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+              <h4 style="font-size: 15px"><b>Invested Amount</b></h4>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" style="margin-bottom: 10px;">
+        <div id="invested_div" ></div>
+    </div>
   </div>
-</div>
 </div>
 <div class="col-md-6">
-<div class="card" >
-  <div class="card-header" style="background-color: #cfaded">
+<div class="card shadow" >
+  <div class="card-header"style="background: linear-gradient(to bottom, #d3aaf2 -7%, #7106c2 135%)">
       <div class="row">
           <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-            Interests amount
+            <h4 style="font-size: 15px"><b>Interest Amount</b></h4>
           </div>
       </div>
   </div>
@@ -30,6 +123,26 @@
 </div>
 </div>
 </div>
+
+<style type="text/css">
+    .shadow {
+              
+              box-shadow: 3px 3px 4px  grey;
+              border-radius: 5px;
+            }
+    .background{
+                opacity: 0.2;
+                background: linear-gradient(to right, #99ccff 12%, #3366cc 114%);
+                position: fixed; 
+                margin-left: -10%;
+                margin-top:-5%;
+                margin-right: -3%;
+                width: 150%; 
+                height: 100%;
+
+            }
+
+  </style>
   <!-- <div id="invested_div" ></div> -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
@@ -48,7 +161,7 @@ function drawBasic() {
   var options = {
     // title:"",
     width: 200,
-    height: 350,
+    height: 330,
     legend: { position: 'top' },
     bar: { groupWidth: '75%' },
     
@@ -58,7 +171,7 @@ function drawBasic() {
   var interests_options = {
     // title:"",
     width: 200,
-    height: 350,
+    height: 330,
     legend: { position: 'top' },
     bar: { groupWidth: '75%' },
     

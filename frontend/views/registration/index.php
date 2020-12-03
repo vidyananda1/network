@@ -20,14 +20,15 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
 
     <?php 
          $gridColumns = [
-            'investor_name',
+            //'investor_name',
                     //'member_code',
-                   'investor_name',
+                        'member_code',
+                        'investor_name',
                         'phone',
                         'address',
                         'aadhaar',
                         'date',
-                        'member_code',
+                        
                         'referral_status',
                         'referral_code',
                         'regis_amount',
@@ -70,7 +71,7 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
             <div class="panel-body table-responsive">
             
                 <p>
-                    <?= Html::a('Create Registration', ['create'], ['class' => 'btn btn-warning ']) ?>
+                    <?= Html::a('Create Registration', ['create'], ['class' => 'btn btn-primary ']) ?>
                 </p>
 
                 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -82,17 +83,31 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
                         ['class' => 'yii\grid\SerialColumn'],
 
                         //'id',
+                            'date',
+                            'member_code',
                             'investor_name',
                             'phone',
                             'address',
                             'aadhaar',
-                            'date',
-                            'member_code',
+                            
+                            
                             'referral_status',
                             'referral_code',
-                            'regis_amount',
-                            'invest_amount',
-                            'total',
+                            
+                            [
+                                'attribute'=>'regis_amount',
+                                'filter'=>'',
+                            ],
+                            [
+                                'attribute'=>'invest_amount',
+                                'filter'=>'',
+                            ],
+                            [
+                                'attribute'=>'total',
+                                'filter'=>'',
+                            ],
+                            
+                            
                         [
                             'attribute'=>'created_by',
                             'value' => function ($model) use($user) {
@@ -108,9 +123,26 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
                         //'updated_by',
                         //'updated_date',
                         //'record_status',
+                        [
+                            'value' => function ($model) {
+                              return Html::a('Print', ['registration/print', 'id' => $model->id], ['class' => 'btn btn-sm btn-success ','target'=>'_blank']);  
+                                        },
+                                        'format' => 'raw',
+                        ],
+                        [
+                            'value' => function ($model) {
+                              return Html::a('update', ['registration/update', 'id' => $model->id], ['class' => 'btn btn-sm btn-warning ']);  
+                                        },
+                                        'format' => 'raw',
+                        ],
+                        [
+                            'value' => function ($model) {
+                              return Html::a('Delete', ['registration/delete', 'id' => $model->id], ['class' => 'btn btn-sm btn-danger ','data-confirm'=>'CONFIRM APPLY?']);  
+                                        },
+                                        'format' => 'raw',
+                        ],
 
-                        ['class' => 'yii\grid\ActionColumn',
-                            'template' => '{update} {delete}'],
+                       
                     ],
                 ]); ?>
             </div>

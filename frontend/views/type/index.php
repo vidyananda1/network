@@ -36,7 +36,7 @@ use yii\grid\GridView;
             // 'record_status',
 
             ['class' => 'yii\grid\ActionColumn',
-                'template' => '{update} {delete}'],
+                'template' => '{update}'],
         ],
     ]); ?>
 </div>
