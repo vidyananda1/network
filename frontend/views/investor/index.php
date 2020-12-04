@@ -35,7 +35,6 @@ use yii\helpers\Url;
         'class' => ['table table-striped table-bordered tblSpace']
         ]
     ]); ?>
-
     <div id="chart_div"></div>
 </div>
 
@@ -51,25 +50,31 @@ use yii\helpers\Url;
 }
 
 table.google-visualization-orgchart-table { 
-     border-collapse: separate !important; 
+     border-collapse: separate  !important; 
     
 }
  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
+    display: block  !important;
+    overflow: auto !important;
+    white-space: nowrap !important;
  }
- .tblSpace {
-  border-spacing: 10%;
- }
+ /* w */
  #loader {
    display: none;
  }
+ .member {
+   display: flex;
+   flex-direction: column;
+   font-weight:bold;
+   font-size: 1.2em;
+   /* color:blue; */
+ }
  </style>
+ 
 <?php 
   $membersUrl = Url::to(['members-list']);
   $this->registerJs('
-    console.log("next");
+    // console.log("next");
     const member_code = $("#investor-member_code");
     const chartDiv = $("#chart_div");
     var arr= null;
@@ -85,7 +90,7 @@ table.google-visualization-orgchart-table {
         return false;
       }
       event.preventDefault();
-      console.log(membersUrl);
+      // console.log(membersUrl);
       table.empty();
       chartDiv.empty();
       $.get(membersUrl,function(data){
@@ -94,9 +99,9 @@ table.google-visualization-orgchart-table {
           table.append("No results found.");
           return false;
         }
-        console.log(data);
+        // console.log(data);
         arr = JSON.parse(data);
-        console.log(arr[0]["investor"]);
+        // console.log(arr[0]["investor"]);
         arr[0]["investor"].forEach(function(items,index){
           table.append(`
           <tr>
@@ -112,7 +117,21 @@ table.google-visualization-orgchart-table {
         });
         // console.log(arr[0]["referred"]);
         chartData =  arr[0]["referred"];
-        
+        var obj=[];
+        for(let i=0;i<chartData.length;i++) {
+          obj=[];
+          obj["v"] = chartData[i][0];
+          obj["f"] = `<div class="member">
+                      <span> Name: ${chartData[i][0]}</span>
+                      <span>Memeber Code: ${chartData[i][2]}</span>
+                      </div>`;
+
+          //convert to object
+          obj = {...obj};     
+          chartData[i][0] = obj;
+          chartData[i][2] = "";
+        }
+        console.log(chartData);
         google.charts.load("current", {packages:["orgchart"]});
         google.charts.setOnLoadCallback(drawChart);
       }).done(function(){
@@ -128,7 +147,7 @@ table.google-visualization-orgchart-table {
       data.addColumn("string","ToolTip");
 
       // For each orgchart box, provide the name, manager, and tooltip to show.
-      console.log(chartData);
+      // console.log(chartData);
       data.addRows(chartData);
       var chart = new google.visualization.OrgChart(document.getElementById("chart_div"));
       // Draw the chart, setting the allowHtml option to true for the tooltips.

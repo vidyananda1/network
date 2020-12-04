@@ -82,10 +82,11 @@ class InvestorController extends Controller
         if(empty($investor))
             return null;
         $investor_name= $registrations[$member_code];
-        $referred_names = Registration::find()->select('investor_name')->where(['record_status'=>1,'referral_code'=>$member_code])->asArray()->all();
-        $arr = [];
+        $referred_names = Registration::find()->select('investor_name,member_code')->where(['record_status'=>1,'referral_code'=>$member_code])->asArray()->all();
+        $arr[] = [$investor_name,"",$member_code];
+        // $arr = [];
         foreach($referred_names as $key => $value) {
-            $arr[]= [$value["investor_name"], $investor_name,''];
+            $arr[]= [$value["investor_name"], $investor_name,$value["member_code"]];
         }
         $obj []= [ 'investor'=>$investor ,'referred' =>$arr];
         // echo "<pre>";print_r($arr);echo "</pre>";die;
