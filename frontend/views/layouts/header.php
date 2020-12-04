@@ -39,13 +39,11 @@ date_default_timezone_set('Asia/Kolkata');
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="../web/user_image/noimage.jpg" class="img-circle"
-                                 alt="User Image"/>
-
+                            
+                            <i class="glyphicon glyphicon-user fa-5x" style="color: white"></i>
                         <p>
-                                <?= Yii::$app->user->identity->username ?>
-                               
-                            </p>
+                            <?= Yii::$app->user->identity->username ?>       
+                        </p>
                             
                         </li>
                   

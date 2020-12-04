@@ -99,6 +99,18 @@ public function actionCreate()
             }else{
                
                     if($model->referral_status == 'SELF'){
+                         $act = Registration::find()->where(['id'=>$model->id])->andwhere(['record_status'=>'1'])->one();
+                            $phone = $act->phone;
+                            //die($phone);
+                            if(!$phone){
+                                $transaction->rollBack();
+                                Yii::$app->session->setFlash('danger', 'Phone No. not found!!');
+                                return $this->redirect(['index',]); 
+
+                            }else{
+                                $msg = $act->investor_name.',registration successful.Your Member-Code is '.$act->member_code;
+                                $act->send_msg($act->phone, $msg);
+                            } 
                         $transaction->commit();
                         Yii::$app->session->setFlash('success', 'Successfully Registered with referral status Self!');
                         return $this->redirect(['index']);
@@ -120,6 +132,20 @@ public function actionCreate()
                             
                         }
                         if($referral->save()){
+
+                            $act = Registration::find()->where(['id'=>$model->id])->andwhere(['record_status'=>'1'])->one();
+                            $phone = $act->phone;
+                                //die($phone);
+                            if(!$phone){
+                                    $transaction->rollBack();
+                                    Yii::$app->session->setFlash('danger', 'Phone No. not found!!');
+                                    return $this->redirect(['index',]); 
+
+                            }else{
+                                $msg = 'Hello, Mr/Mrs'.$act->investor_name.',Registration successful.Your Member-Code is '.$act->member_code;
+                                $act->send_msg($act->phone, $msg);
+                            }
+
                                 $transaction->commit();
                                 Yii::$app->session->setFlash('success', 'Successfully Registered!');
                                 return $this->redirect(['index']);
@@ -128,6 +154,8 @@ public function actionCreate()
                             Yii::$app->session->setFlash('danger', 'Failed to Register in ReferralDetails!');
                             return $this->redirect(['index',]);       
                     }
+
+                    
                     
                     }
                     

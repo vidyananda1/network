@@ -52,6 +52,26 @@ class Registration extends \yii\db\ActiveRecord
         ];
     }
 
+    public function send_msg($phone, $msg) {
+        $api_key = '55F3702FF650D8';
+        $contacts = $phone;
+        $from = 'SOFTEC';
+        $sms_text = urlencode($msg);
+
+//Submit to server
+
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, "http://sms.hadrontechs.com/app/smsapi/index.php");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "key=".$api_key."&campaign=0&routeid=13&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        //echo $response;
+        //print_r($otp_data);die;
+        //echo $otp_data;
+    }
+
     /**
      * {@inheritdoc}
      */

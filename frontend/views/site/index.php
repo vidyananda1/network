@@ -16,11 +16,14 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
 
 ?>
 
+<H3 style="text-align:center;color: #7B68EE;">MULTI-LEVEL MARKETING MANAGEMENT SYSTEM</H3>
+<br>
+
 
 <div class="row ">
     <div class="col-lg-3 col-xs-3 " >
           <!-- small box -->
-          <div class="small-box shadow" style="background: linear-gradient(to bottom, #33ccff 0%, #48628c 100%); ">
+          <div class="small-box shadow" style="background-color:#85e3ff ">
           <div class="inner">
              
 
@@ -38,7 +41,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
     </div>
     <div class="col-lg-3 col-xs-3">
           <!-- small box -->
-          <div class="small-box shadow" style="background: linear-gradient(to bottom, #99ff99 -6%, #13852e 106%)">
+          <div class="small-box shadow" style="background-color:#bffcc6;">
             <div class="inner">
              
 
@@ -56,7 +59,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
     </div>
     <div class="col-lg-3 col-xs-3">
           <!-- small box -->
-          <div class="small-box shadow" style="background: linear-gradient(to bottom, #ff9966 -7%, #cf2204 135%)">
+          <div class="small-box shadow" style="background-color:#ffabab;">
             <div class="inner">
              
 
@@ -74,7 +77,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
     </div>
     <div class="col-lg-3 col-xs-3">
           <!-- small box -->
-          <div class="small-box shadow" style="background: linear-gradient(to bottom, #fffa75 -7%, #bfb30b 135%)">
+          <div class="small-box shadow" style="background-color:#ffb5e8;">
             <div class="inner">
              
 
@@ -99,7 +102,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
 <div class="row">
 <div class="col-md-6 ">
   <div class="card shadow " >
-    <div class="card-header" style="background: linear-gradient(to bottom, #d3aaf2 -7%, #7106c2 135%)">
+    <div class="card-header" style="background-color:#cfa3ff;">
         <div class="row">
             <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
               <h4 style="font-size: 15px"><b>Invested Amount</b></h4>
@@ -113,7 +116,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
 </div>
 <div class="col-md-6">
 <div class="card shadow" >
-  <div class="card-header"style="background: linear-gradient(to bottom, #d3aaf2 -7%, #7106c2 135%)">
+  <div class="card-header"style="background-color:#cfa3ff;">
       <div class="row">
           <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
             <h4 style="font-size: 15px"><b>Interest Amount</b></h4>
@@ -158,6 +161,7 @@ function drawBasic() {
   var interests = <?= $interests ?>;
   invested = columns.concat(invested);
   interests = columns.concat(interests);
+  
   var invested = google.visualization.arrayToDataTable(invested);
   var interests = google.visualization.arrayToDataTable(interests);
 

@@ -1,4 +1,4 @@
-<aside class="main-sidebar" style="background: linear-gradient(to right, #b9bec4 15%, #365a85 135%);box-shadow: 2px 2px 6px grey; ">
+<aside class="main-sidebar" style="box-shadow: 2px 2px 6px grey; ">
 
     <section class="sidebar">
 
@@ -14,7 +14,7 @@
                       //['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
                       ['label' => 'Pay Interest','icon' => 'usd', 'url' => ['/counter']],
                       ['label' => 'Check Investor','icon' => 'search', 'url' => ['/investor']],
-                      ['label' => 'Reports','icon' => 'search', 'url' => ['/report']],
+                      ['label' => 'Reports','icon' => 'file', 'url' => ['/report']],
                       ['label' => 'User-Management','icon' => ' fa-user', 'url' => ['/member/index']],
                      
                       // ['label' => 'Reports','icon' => 'clipboard', 'url' => ['/report']],

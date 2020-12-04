@@ -40,7 +40,7 @@ class SiteController extends Controller
         $data_interest = Counter::find()->where(['record_status'=>1])->select('sum(paid_amount) as total,month(date_of_payment) as month')->groupBy('month (date_of_payment)')->asArray()->all();
         $invested =$this->formatData($data_invested);
         $interests =$this->formatData($data_interest);
-        // echo "<pre>";print_r($invested);echo "<pre>";
+        //echo "<pre>";print_r($invested);echo "<pre>";
         // echo "<pre>";print_r($interest);echo "<pre>";die;
         return $this->render('index',[
             'invested'=>json_encode($invested),
