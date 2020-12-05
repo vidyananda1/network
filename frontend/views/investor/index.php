@@ -92,7 +92,6 @@ table.google-visualization-orgchart-table {
     var memberCode = "";//global variable for sending member code
     
     $(document).on("click","#search",function(){
-      $("#loader").show();
       memberCode = member_code.val();
       getData();
       
@@ -106,6 +105,7 @@ table.google-visualization-orgchart-table {
 
     function getData() {
       event.preventDefault();
+      $("#loader").show();
       var membersUrl = `'.$membersUrl.'&member_code=${memberCode}`;
       if(memberCode==""){
         alert("Please enter member code");
