@@ -8,7 +8,7 @@ use app\models\ReferralDetailsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
 /**
  * ReferralDetailsController implements the CRUD actions for ReferralDetails model.
  */
@@ -24,6 +24,22 @@ class ReferralDetailsController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['*'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        // 'actions' => ['index','create','update','view'],
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];

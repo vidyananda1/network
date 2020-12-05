@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\rbac\DbManager;
+use yii\filters\AccessControl;
 /**
  * MemberController implements the CRUD actions for Member model.
  */
@@ -26,6 +27,22 @@ class MemberController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['*'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        // 'actions' => ['index','create','update','view'],
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];

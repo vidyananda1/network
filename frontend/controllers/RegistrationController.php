@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\ReferralDetails;
 use app\models\Counter;
-
+use yii\filters\AccessControl;
 /**
  * RegistrationController implements the CRUD actions for Registration model.
  */
@@ -26,6 +26,23 @@ class RegistrationController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['*'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        // 'actions' => ['index','create','update','view'],
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
