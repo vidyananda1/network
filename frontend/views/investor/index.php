@@ -5,14 +5,16 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 ?>
 
-<div class="container">
+<!-- <div class="col-md-12"> -->
+<div >
 
   <?php
   echo $this->render('_search', [
     'model' =>$model,
     'registrations' => $registrations
     ]) ?>
-
+</div>
+<div >
   <?php 
     $dataProvider = new \yii\data\ArrayDataProvider();
     echo GridView::widget([
@@ -35,8 +37,11 @@ use yii\helpers\Url;
         'class' => ['table table-striped table-bordered tblSpace']
         ]
     ]); ?>
-    <div id="chart_div"></div>
 </div>
+<!-- </div> -->
+
+    <!-- <div id="chart_div" class="col-md-12 col-xs-offset-1"></div> -->
+    <div id="chart_div" class="flex-row col-md-12" ></div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -44,9 +49,18 @@ use yii\helpers\Url;
 <style>
 .container {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr ;
   align-content: space-between;
-  /* justify-content: space-evenly; */
+}
+ 
+/* .container {
+  display: flex;
+  justify-content: center;
+} */
+.flex-row {
+  display: flex;
+  flex-direction:row ;
+  justify-content: center;
 }
 
 table.google-visualization-orgchart-table { 
@@ -58,7 +72,6 @@ table.google-visualization-orgchart-table {
     overflow: auto !important;
     white-space: nowrap !important;
  }
- /* w */
  #loader {
    display: none;
  }
@@ -75,21 +88,34 @@ table.google-visualization-orgchart-table {
   $membersUrl = Url::to(['members-list']);
   $this->registerJs('
     // console.log("next");
-    const member_code = $("#investor-member_code");
+    const member_code = $("#investor-member_code");//get member code from text input
     const chartDiv = $("#chart_div");
     var arr= null;
     var chartData = null;
     var table = $("#investor_tbl tbody");
+    var memberCode = "";//global variable for sending member code
     
     $(document).on("click","#search",function(){
       $("#loader").show();
-      var membersUrl = `'.$membersUrl.'&member_code=${member_code.val()}`;
-      if(member_code.val()==""){
+      memberCode = member_code.val();
+      getData();
+      
+    });
+
+    $(document).on("click",".org-name",function(){
+      memberCode = $(this).data("membercode");
+      member_code.val(memberCode);
+      getData();
+    });
+
+    function getData() {
+      event.preventDefault();
+      var membersUrl = `'.$membersUrl.'&member_code=${memberCode}`;
+      if(memberCode==""){
         alert("Please enter member code");
         $("#loader").hide();
         return false;
       }
-      event.preventDefault();
       // console.log(membersUrl);
       table.empty();
       chartDiv.empty();
@@ -122,7 +148,7 @@ table.google-visualization-orgchart-table {
           obj=[];
           obj["v"] = chartData[i][0];
           obj["f"] = `<div class="member">
-                      <span> Name: ${chartData[i][0]}</span>
+                      <span data-membercode=${chartData[i][2]} class="org-name"> Name:<a href="#" > ${chartData[i][0]}</a></span>
                       <span>Memeber Code: ${chartData[i][2]}</span>
                       </div>`;
 
@@ -131,14 +157,14 @@ table.google-visualization-orgchart-table {
           chartData[i][0] = obj;
           chartData[i][2] = "";
         }
-        console.log(chartData);
+        // console.log(chartData);
         google.charts.load("current", {packages:["orgchart"]});
         google.charts.setOnLoadCallback(drawChart);
       }).done(function(){
         $("#loader").hide();
 
       });
-    });
+    }
 
     function drawChart() {
       var data = new google.visualization.DataTable();
