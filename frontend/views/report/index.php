@@ -100,6 +100,5 @@ foreach($payments as $key=>$value) {
 <?php
 //  $url = Url::to(["index"]);
 $this->registerJs('
-console.log("1");
 window.print();
 ');
