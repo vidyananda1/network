@@ -6,6 +6,7 @@ use yii\bootstrap\Modal;
 use common\models\User;
 use kartik\export\ExportMenu;
 use yii\helpers\ArrayHelper;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RegistrationSearch */
@@ -14,6 +15,7 @@ use yii\helpers\ArrayHelper;
 // $this->title = 'Registrations';
 // $this->params['breadcrumbs'][] = $this->title;
 $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
+$status = ['REFERRAL'=>'REFERRAL','SELF'=>'SELF'];
 ?>
 <br><br><br>
 <div class="registration-index">
@@ -83,21 +85,40 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
                         ['class' => 'yii\grid\SerialColumn'],
 
                         //'id',
-                            'date',
+                            //'date',
+                        [
+                            'attribute'=>'date',
+                            //'value' =>'attribute_name',
+
+                            'filter'=>DatePicker::widget([
+                            'model' => $searchModel,
+                            'attribute'=>'date',
+                            'clientOptions' => [
+                                'todayHighlight' => true,
+                                'autoclose' => true,
+                                'format' => 'yyyy-mm-dd'
+                                ]
+                            ])       
+                        ],
                             'member_code',
                             'investor_name',
                             'phone',
-                            'address',
-                            'aadhaar',
+                            //'address',
+                            //'aadhaar',
                             
                             
-                            'referral_status',
+                            //'referral_status',
+                        [
+                            'attribute'=>'referral_status',
+                            'filter'=>$status,
+                        ],
                             'referral_code',
-                            
-                            [
-                                'attribute'=>'regis_amount',
-                                'filter'=>'',
-                            ],
+                           
+
+                            // [
+                            //     'attribute'=>'regis_amount',
+                            //     'filter'=>'',
+                            // ],
                             [
                                 'attribute'=>'invest_amount',
                                 'filter'=>'',
