@@ -17,8 +17,8 @@ class RegistrationSearch extends Registration
     public function rules()
     {
         return [
-            [['id', 'referral_status', 'created_by', 'updated_by'], 'integer'],
-            [['investor_name', 'phone', 'address', 'aadhaar', 'date', 'member_code', 'referral_code', 'created_date', 'updated_date', 'record_status'], 'safe'],
+            [['id', 'created_by', 'updated_by'], 'integer'],
+            [['investor_name', 'phone', 'address', 'aadhaar', 'date', 'member_code', 'referral_code', 'created_date', 'updated_date', 'referral_status','record_status'], 'safe'],
             [['regis_amount', 'invest_amount', 'total'], 'number'],
         ];
     }

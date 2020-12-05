@@ -7,7 +7,7 @@ use common\models\User;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use kartik\export\ExportMenu;
-
+use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CounterSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -150,7 +150,21 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
                                 'data' => $mem_code,
                         ]),
                     ],
-                    'date_of_payment',
+                    //'date_of_payment',
+                    [
+                            'attribute'=>'date_of_payment',
+                            //'value' =>'attribute_name',
+
+                            'filter'=>DatePicker::widget([
+                            'model' => $searchModel,
+                            'attribute'=>'date_of_payment',
+                            'clientOptions' => [
+                                'todayHighlight' => true,
+                                'autoclose' => true,
+                                'format' => 'yyyy-mm-dd'
+                                ]
+                            ])       
+                        ],
                     //'rate_of_interest',
                     [
                         'attribute'=>'rate_of_interest',
