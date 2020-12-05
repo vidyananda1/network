@@ -41,7 +41,7 @@ use yii\helpers\Url;
 <!-- </div> -->
 
     <!-- <div id="chart_div" class="col-md-12 col-xs-offset-1"></div> -->
-    <div id="chart_div" class="flex-row col-md-12" ></div>
+    <div id="chart_div"  ></div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -57,11 +57,7 @@ use yii\helpers\Url;
   display: flex;
   justify-content: center;
 } */
-.flex-row {
-  display: flex;
-  flex-direction:row ;
-  justify-content: center;
-}
+
 
 table.google-visualization-orgchart-table { 
      border-collapse: separate  !important; 
@@ -137,7 +133,7 @@ table.google-visualization-orgchart-table {
             <td>${items.aadhaar}</td>
             <td>${items.member_code}</td>
             <td>${items.referral_status}</td>
-            <td>${items.referral_code}</td>
+            <td><span class="org-name" data-membercode=${items.referral_code}><a href="#">${items.referral_code}</a></span></td>
           </tr>
           `);
         });
@@ -148,8 +144,8 @@ table.google-visualization-orgchart-table {
           obj=[];
           obj["v"] = chartData[i][0];
           obj["f"] = `<div class="member">
-                      <span data-membercode=${chartData[i][2]} class="org-name"> Name:<a href="#" > ${chartData[i][0]}</a></span>
-                      <span>Memeber Code: ${chartData[i][2]}</span>
+                      <span data-membercode=${chartData[i][2]} class="org-name"> <a href="#" > ${chartData[i][0]}</a></span>
+                      <span> ${chartData[i][2]}</span>
                       </div>`;
 
           //convert to object
