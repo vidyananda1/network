@@ -29,6 +29,7 @@ use \common\models\User;
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
+                        'tableOptions' => ['class' => 'table table-striped '],
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
 

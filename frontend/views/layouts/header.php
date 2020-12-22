@@ -8,7 +8,7 @@ date_default_timezone_set('Asia/Kolkata');
 
 ?>
 
-<header class="main-header " style="box-shadow: 2px 2px 5px;" >
+<header class="main-header " style="box-shadow: 0px 0px 10px;" >
 
 <?= Html::csrfMetaTags() ?>
 

@@ -20,6 +20,7 @@ use yii\helpers\Url;
     echo GridView::widget([
       'dataProvider' => $dataProvider,
       'filterModel' => null,
+
       'columns' =>[
         // [
         //   'class' => 'yii\grid\SerialColumn'
@@ -34,7 +35,7 @@ use yii\helpers\Url;
       ],
       'tableOptions' => [
         'id'=>'investor_tbl',
-        'class' => ['table table-striped table-bordered tblSpace']
+        'class' => ['table table-striped  tblSpace']
         ]
     ]); ?>
 </div>

@@ -31,24 +31,24 @@ use common\models\User;
     <br>
     <table style="border:solid black 1px;width:100%;">
       <tr >
-        <td colspan="4" style="background:gray;color:white">Received a sum of Ruppees (Rs)</td>  
-        <td colspan="2" style="text-align:center;">Rs <?= $details->total ?></td>
+        <td colspan="4" style="background:gray;color:white">Paid interest amount of Ruppees (Rs) </td>
+        <td colspan="2">Rs <?= $details->paid_amount ?></td>  
       </tr>
       <tr>
-        <td colspan="4" style="background:gray;color:white">On account of </td>  
-        <td colspan="2" style="text-align:center;"> <?= "Investment in NK Groups" ?></td>
+        <td colspan="3" style="background:gray;color:white">On account of </td>
+        <td colspan="3"> <?= "Investment in NK Groups" ?></td>  
       </tr>
       <tr style="background:gray;color:white">
-        <td colspan="3" >From</td>
-        <td >Address</td>
-        <td >Member Code</td>
-        <td >Date of Joining</td>
+        <td colspan="3" >To</td>
+        <td >Rate Of Interest</td>
+        <td >Investment Amount</td>
+        <td >Date of Payment</td>
       </tr>
       <tr >
         <td colspan="3" ><?= $details->investor_name ?></td>
-        <td><?= $details->address ?></td> 
-        <td><?= $details->member_code?></td>
-        <td><?= date('d-m-Y',strtotime($details->date))?></td>
+        <td><?= $details->rate_of_interest ?> %</td> 
+        <td>Rs <?= $details->invested_amount ?></td>
+        <td><?= date('d-m-Y',strtotime($details->date_of_payment)) ?></td>
         
       </tr>
       
@@ -84,24 +84,24 @@ use common\models\User;
     <br>
     <table style="border:solid black 1px;width:100%;">
       <tr style="background:gray;color:white">
-        <td colspan="4" style="background:gray;color:white">Received a sum of Ruppees (Rs)</td>  
-        <td colspan="2" style="text-align:center;">Rs <?= $details->total ?></td>
+        <td colspan="4" style="background:gray;color:white">Paid interest amount of Ruppees (Rs) </td>
+        <td colspan="2">Rs <?= $details->paid_amount ?></td>  
       </tr>
       <tr>
-        <td colspan="4" style="background:gray;color:white">On account of </td>  
-        <td colspan="2" style="text-align:center;"> <?= "Investment in NK Groups" ?></td>
+        <td colspan="3" style="background:gray;color:white">On account of </td>
+        <td colspan="3"> <?= "Investment in NK Groups" ?></td>
       </tr>
       <tr style="background:gray;color:white">
-        <td colspan="3" >From</td>
-        <td >Address</td>
-        <td >Member Code</td>
-        <td >Date of Joining</td>
+        <td colspan="3" >To</td>
+        <td >Rate of Interest</td>
+        <td >Investment Amount</td>
+        <td >Date of Payment</td>
       </tr>
       <tr >
         <td colspan="3" ><?= $details->investor_name ?></td>
-        <td><?= $details->address ?></td> 
-        <td><?= $details->member_code?></td>
-        <td><?= date('d-m-Y',strtotime($details->date))?></td>
+        <td><?= $details->rate_of_interest ?> %</td> 
+        <td>Rs <?= $details->invested_amount?></td>
+        <td><?= date('d-m-Y',strtotime($details->date_of_payment)) ?></td>
         
       </tr>
       

@@ -76,6 +76,22 @@ class CounterController extends Controller
         ]);
     }
 
+    public function actionPrint($id)
+    {
+        $model = new Counter();
+        $details = Counter::find()->where(["id"=>$id])->one();
+        
+        // if ($model->load(Yii::$app->request->post()) ) {
+        //    // return $this->redirect(['view', 'id' => $model->id]);
+        // }
+        
+
+        return $this->renderAjax('print', [
+            'model' => $model,
+            'details'=>$details
+        ]);
+    }
+
     /**
      * Creates a new Counter model.
      * If creation is successful, the browser will be redirected to the 'view' page.

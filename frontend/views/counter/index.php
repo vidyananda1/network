@@ -124,6 +124,7 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+                'tableOptions' => ['class' => 'table table-striped '],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
@@ -217,9 +218,21 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
                     // 'updated_date',
                     // 'record_status',
 
-                    ['class' => 'yii\grid\ActionColumn',
-                        'template' => '{update}',
-                ],
+                //     ['class' => 'yii\grid\ActionColumn',
+                //         'template' => '{update}',
+                // ],
+                    [
+                            'value' => function ($model) {
+                              return Html::a('Print', ['counter/print', 'id' => $model->id], ['class' => 'btn btn-sm btn-success ','target'=>'_blank']);  
+                                        },
+                                        'format' => 'raw',
+                        ],
+                        [
+                            'value' => function ($model) {
+                              return Html::a('update', ['counter/update', 'id' => $model->id], ['class' => 'btn btn-sm btn-warning ']);  
+                                        },
+                                        'format' => 'raw',
+                        ],
                 ],
             ]); ?>
         </div>

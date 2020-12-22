@@ -17,7 +17,7 @@ use dosamigos\datepicker\DatePicker;
 $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
 $status = ['REFERRAL'=>'REFERRAL','SELF'=>'SELF'];
 ?>
-<br><br><br>
+<br>
 <div class="registration-index">
 
     <?php 
@@ -73,7 +73,7 @@ $status = ['REFERRAL'=>'REFERRAL','SELF'=>'SELF'];
             <div class="panel-body table-responsive">
             
                 <p>
-                    <?= Html::a('Create Registration', ['create'], ['class' => 'btn btn-primary ']) ?>
+                    <?= Html::a('Add New Investor', ['create'], ['class' => 'btn new btn-primary text-muted']) ?>
                 </p>
 
                 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -81,6 +81,7 @@ $status = ['REFERRAL'=>'REFERRAL','SELF'=>'SELF'];
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
+                    'tableOptions' => ['class' => 'table table-striped '],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
 
@@ -119,10 +120,10 @@ $status = ['REFERRAL'=>'REFERRAL','SELF'=>'SELF'];
                             //     'attribute'=>'regis_amount',
                             //     'filter'=>'',
                             // ],
-                            [
-                                'attribute'=>'invest_amount',
-                                'filter'=>'',
-                            ],
+                            // [
+                            //     'attribute'=>'invest_amount',
+                            //     'filter'=>'',
+                            // ],
                             [
                                 'attribute'=>'total',
                                 'filter'=>'',
@@ -156,12 +157,12 @@ $status = ['REFERRAL'=>'REFERRAL','SELF'=>'SELF'];
                                         },
                                         'format' => 'raw',
                         ],
-                        [
-                            'value' => function ($model) {
-                              return Html::a('Delete', ['registration/delete', 'id' => $model->id], ['class' => 'btn btn-sm btn-danger ','data-confirm'=>'CONFIRM APPLY?']);  
-                                        },
-                                        'format' => 'raw',
-                        ],
+                        // [
+                        //     'value' => function ($model) {
+                        //       return Html::a('Delete', ['registration/delete', 'id' => $model->id], ['class' => 'btn btn-sm btn-danger ','data-confirm'=>'CONFIRM APPLY?']);  
+                        //                 },
+                        //                 'format' => 'raw',
+                        // ],
 
                        
                     ],
@@ -169,4 +170,9 @@ $status = ['REFERRAL'=>'REFERRAL','SELF'=>'SELF'];
             </div>
     </div>
 </div>
+<style type="text/css">
+    .new{
+        box-shadow: 1px 2px 3px #cfd4d3;
+    }
+</style>
 

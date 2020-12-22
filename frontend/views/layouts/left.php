@@ -1,4 +1,4 @@
-<aside class="main-sidebar" style="box-shadow: 2px 2px 6px grey; ">
+<aside class="main-sidebar" style="box-shadow: 0px 0px 20px grey; ">
 
     <section class="sidebar">
 

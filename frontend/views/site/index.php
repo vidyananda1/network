@@ -21,7 +21,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
 
 
 <div class="row ">
-    <div class="col-lg-3 col-xs-3 " >
+    <div class="col-lg-4 col-xs-4 " >
           <!-- small box -->
           <div class="small-box shadow" style="background-color:#85e3ff ">
           <div class="inner">
@@ -32,32 +32,15 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
             <div class="inner">
               <div><h4 style="font-size: 15px"><b><?= $reg ?></b></h4></div>
             </div>
-            <div class="icon">
+            <div class="icon" >
               <i class="fa fa-users"></i>
             </div>
             
                 <a href="index.php?r=registration/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
             </div>
     </div>
-    <div class="col-lg-3 col-xs-3">
-          <!-- small box -->
-          <div class="small-box shadow" style="background-color:#bffcc6;">
-            <div class="inner">
-             
-
-              <h4 style="font-size: 15px"><b>Total Users</b></h4>
-            </div>
-            <div class="inner">
-              <div><h4 style="font-size: 15px"><b><?= $mem ?></b></h4></div>
-            </div>
-            <div class="icon">
-              <i class="fa fa-user-plus"></i>
-            </div>
-            
-                <a href="index.php?r=member/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
-          </div>
-    </div>
-    <div class="col-lg-3 col-xs-3">
+    
+    <div class="col-lg-4 col-xs-4">
           <!-- small box -->
           <div class="small-box shadow" style="background-color:#ffabab;">
             <div class="inner">
@@ -75,7 +58,7 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
                 <a href="index.php?r=registration/index" class="small-box-footer" style="border-radius: 5px">ADD +<i class="fa fa-arrow-circle-right"></i></a> 
           </div>
     </div>
-    <div class="col-lg-3 col-xs-3">
+    <div class="col-lg-4 col-xs-4">
           <!-- small box -->
           <div class="small-box shadow" style="background-color:#ffb5e8;">
             <div class="inner">
@@ -101,8 +84,8 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
 <div>&emsp;</div>
 <div class="row">
 <div class="col-md-6 ">
-  <div class="card shadow " >
-    <div class="card-header" style="background-color:#cfa3ff;">
+  <div class="card shadow " style="background-color: white;" >
+    <div class="card-header" style="background-color:#a283f2;">
         <div class="row">
             <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
               <h4 style="font-size: 15px"><b>Invested Amount</b></h4>
@@ -114,26 +97,27 @@ $amount_paid = Counter::find()->where(['record_status'=>'1'])->sum('paid_amount'
     </div>
   </div>
 </div>
-<div class="col-md-6">
-<div class="card shadow" >
-  <div class="card-header"style="background-color:#cfa3ff;">
+<div class="col-md-6 " >
+<div class="card shadow" style="background-color: white;">
+  <div class="card-header"style="background-color:#a283f2;">
       <div class="row">
           <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-            <h4 style="font-size: 15px"><b>Interest Amount</b></h4>
+            <h4 style="font-size: 15px;"><b>Interest Amount</b></h4>
           </div>
       </div>
   </div>
-  <div class="card-body">
+  <div class="card-body" >
     <div id="interests_div" ></div>
   </div>
 </div>
+
 </div>
 </div>
 
 <style type="text/css">
     .shadow {
               
-              box-shadow: 3px 3px 4px  grey;
+              box-shadow: 2px 5px 6px #bfbbbb;;
               border-radius: 5px;
             }
     .background{
@@ -170,7 +154,7 @@ function drawBasic() {
     width: 200,
     height: 330,
     legend: { position: 'top' },
-    bar: { groupWidth: '75%' },
+    bar: { groupWidth: '40%' },
     
   };
 
@@ -180,7 +164,7 @@ function drawBasic() {
     width: 200,
     height: 330,
     legend: { position: 'top' },
-    bar: { groupWidth: '75%' },
+    bar: { groupWidth: '40%' },
     
   };
   

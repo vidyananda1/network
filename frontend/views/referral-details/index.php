@@ -81,6 +81,7 @@ $user= ArrayHelper::map(User::find()->all(), 'id', 'username');
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
+                    'tableOptions' => ['class' => 'table table-striped'],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
 
